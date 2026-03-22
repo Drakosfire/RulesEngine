@@ -3,16 +3,16 @@
 
 ## Problem
 1. We want to play a game where:
-    a. Rules from rule sources are highly variable
-    b. Rules from rule sources transform the world while playing
-    c. The GM transforms the world for players when they Act while playing
-    d. The world maintains its ongoing transforms while playing
-    e. Rules from rule sources constrain transformations while playing
-    f. The world is always in a valid state.
-    g. The GM can override rules while playing.
-    h. The GM can easily undo world transformations while playing.
-    i. The GM can easily trace rule provenance back to its source while playing.
-    j. The GM can suspend a game without losing the state of the world or rules while playing.
+    1. Rules from rule sources are highly variable
+    2. Rules from rule sources transform the world while playing
+    3. The GM transforms the world for players when they Act while playing
+    4. The world maintains its ongoing transforms while playing
+    5. Rules from rule sources constrain transformations while playing
+    6. The world is always in a valid state.
+    7. The GM can override rules while playing.
+    8. The GM can easily undo world transformations while playing.
+    9. The GM can easily trace rule provenance back to its source while playing.
+    10. The GM can suspend a game without losing the state of the world or rules while playing.
 2. Non-functional Requirements
     1. Testability - to prevent bugs
     2. Reliability
