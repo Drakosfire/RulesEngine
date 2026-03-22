@@ -74,11 +74,11 @@ That constraint implies many sub-constraints and transformations. Writing a func
 
 ```txt
 [requires, "PHB_REF_3", Occupies, [xor, [
-   [exists, "PHB_REF_4", "source==TimeMode && type==Value && sink==NonCombat", "world_state_edges"],
+   [exists, "PHB_REF_4", "source==TimeMode && type==Value && sink==NonCombat", "campaign_state_edges"],
    [and,"PHB_REF_5", [
-      [exists, "PHB_REF_6", "source==TickPhase && type==Value && sink=='TurnEnd'", "world_state_edges"],
-      [exists, "source==TimeMode && type==Value && sink==Combat", "world_state_edges"],
-      [eq, 1, [count, [filter, "type==Occupies && source==Creature && sink==required_node_sink", "world_state_edges"]]]
+      [exists, "PHB_REF_6", "source==TickPhase && type==Value && sink=='TurnEnd'", "campaign_state_edges"],
+      [exists, "source==TimeMode && type==Value && sink==Combat", "campaign_state_edges"],
+      [eq, 1, [count, [filter, "type==Occupies && source==Creature && sink==required_node_sink", "campaign_state_edges"]]]
    ]]
 ]]]
 ```
