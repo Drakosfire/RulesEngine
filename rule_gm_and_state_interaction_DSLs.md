@@ -3,20 +3,20 @@
 
 ## Problem
 1. We want to play a game where:
-   1.1. Rules from rule sources are highly variable
-   1.2. Rules from rule sources transform the world while playing
-   1.3. The GM transforms the world for players when they Act while playing
-   1.4. The world maintains its ongoing transforms while playing
-   1.5. Rules from rule sources constrain transformations while playing
-   1.6. The world is always in a valid state.
-   1.7. The GM can override rules while playing.
-   1.8. The GM can easily undo world transformations while playing.
-   1.9. The GM can easily trace rule provenance back to its source while playing.
-   1.10. The GM can suspend a game without losing the state of the world or rules while playing.
+    1.1. Rules from rule sources are highly variable
+    1.2. Rules from rule sources transform the world while playing
+    1.3. The GM transforms the world for players when they Act while playing
+    1.4. The world maintains its ongoing transforms while playing
+    1.5. Rules from rule sources constrain transformations while playing
+    1.6. The world is always in a valid state.
+    1.7. The GM can override rules while playing.
+    1.8. The GM can easily undo world transformations while playing.
+    1.9. The GM can easily trace rule provenance back to its source while playing.
+    1.10. The GM can suspend a game without losing the state of the world or rules while playing.
 2. Non-functional Requirements
-   2.1. Testability - to prevent bugs
-   2.2. Reliability
-   2.3. Speed - so we can play it sooner rather than later
+    2.1. Testability - to prevent bugs
+    2.2. Reliability
+    2.3. Speed - so we can play it sooner rather than later
 
 ## Criteria for a Good Solution
 For 1.1, ensure maximum flexibility for different game systems. Transformations and constraints, whether from rules, the GM, or the world itself, should be agnostic to any particular game system's language. Each transformation or constraint should be as composable as composable as possible to ensure they can be can programmatically enforced and executed. See the Constraint DSL for additional details.
