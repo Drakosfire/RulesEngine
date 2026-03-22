@@ -51,7 +51,7 @@ For GM interactions (1.3,1.7-1.9) we provide an english DSL (e.g. "Bob moves wes
 
 
 #### Transformation DSL
-For transforms - 1.2-1.4: We provide a transform DSL. The application code contains a transformation function to create patches from those transforms, and apply those patches to the world state. Patches are applied on each "Tick".
+For transforms - 1.2-1.4: We provide a transform DSL. The application code contains a transformation function to create patches from those transforms, and apply those patches to the game state. Patches are applied on each "Tick".
 
 | Data format | Note |
 | ------------- | --------------- |
