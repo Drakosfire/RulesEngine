@@ -22,7 +22,7 @@
 For 1.1, ensure maximum flexibility for different game systems. Transformations and constraints, whether from rules, the GM, or the world itself, should be agnostic to any particular game system's language. Each transformation or constraint should be maximally composable to ensure they can be can programmatically enforced and executed. See the Constraint DSL for additional details.
 
 ## Solutions
-To facilitate composability, all solutions are normalized to graph nodes and edges in the game state. Every node and edge within the following game state graph is transformable and constrainable via its following DSLs. Further, each DSL's items are as single-responsiblity and composable as possible (or will be after we iterate on them).
+To facilitate composability, all solutions are normalized to graph nodes and directed edges in the game state, making it largely a collection of adjacency lists. Every node and edge within the following game state graph is transformable and constrainable via its following DSLs. Further, each DSL's items are as single-responsiblity and composable as possible (or will be after we iterate on them).
 
 ### Game State
 
@@ -47,11 +47,11 @@ For 1.2-1.10 & 2.1-2.3, we express all possible influences on the game state inc
 #### English DSL
 For GM interactions (1.3,1.7-1.9) we provide an english DSL (e.g. "Bob moves west"). The application code converts that english DSL into transforms and constraints.
 
-[Examples here](https://docs.google.com/spreadsheets/d/1HOTb7OyPEe5LN2MiTD6JkP0n9DY2IOPA5xGQkWnbEEI/edit?gid=1637849901#gid=1637849901&range=A1) for now.
+[English DSL Examples here](https://docs.google.com/spreadsheets/d/1HOTb7OyPEe5LN2MiTD6JkP0n9DY2IOPA5xGQkWnbEEI/edit?gid=1637849901#gid=1637849901&range=A1) for now.
 
 
 #### Transformation DSL
-For transforms - 1.2-1.4: We provide a transform DSL. The application code contains a transformation function to create patches from those transforms, and apply those patches to the game state. Patches are applied on each "Tick".
+For transforms - 1.2-1.4: We provide a transform DSL. The application code contains a transformation function to create patches from those transforms, and apply those patches to the game state. Patches are applied on each "Tick" and on GM overrides.
 
 | Data format | Note |
 | ------------- | --------------- |
