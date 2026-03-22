@@ -21,13 +21,12 @@
 ## Criteria for a Good Solution
 For 1.1, ensure maximum flexibility for different game systems. Transformations and constraints, whether from rules, the GM, or the world itself, should be agnostic to any particular game system's language. Each transformation or constraint should be as composable as composable as possible to ensure they can be can programmatically enforced and executed. See the Constraint DSL for additional details.
 
-## Solution
+## Solutions
 To facilitate composability, all solutions are normalized to graph nodes and edges. Every node and edge within the following game state graph is transformable and constrainable via its following DSLs. Further, each DSL's items are as single-responsiblity and composable as possible.
 
-### Example World State Format
-For 1.2-1.10 & 2.1-2.3, we express all possible influences on the game state including transformation rules, constraint rules, rule overrides, player acts, and all other game data as part of the game state.
+**Example World State Format**
 
-[Additional Example Cases](https://docs.google.com/spreadsheets/d/1HOTb7OyPEe5LN2MiTD6JkP0n9DY2IOPA5xGQkWnbEEI/edit?gid=1721436380#gid=1721436380&range=C4)
+For 1.2-1.10 & 2.1-2.3, we express all possible influences on the game state including transformation rules, constraint rules, rule overrides, player acts, and all other game data as part of the game state. Below is a minimal example, and here are [additional examples](https://docs.google.com/spreadsheets/d/1HOTb7OyPEe5LN2MiTD6JkP0n9DY2IOPA5xGQkWnbEEI/edit?gid=1721436380#gid=1721436380&range=C4).
 
 ```txt
 {
@@ -59,10 +58,9 @@ For transforms - 1.2-1.4: We provide a transform DSL. The application code conta
 | [omit, transform, collection] | |
 | | |
 | // edge transforms | |
-| [set, edge_id, new_sink_value] | |
-| [get, edge_id] | |
-| [delete, edge_id] | |
-| [create, source, sink] | |
+| [set, edge_id, new_sink_value] | sets existing edge value |
+| [delete, edge_id] | deletes the edge |
+| [create, source, sink] | creates a new edge |
 
 ### Constraint DSL
 For constraints and state validity - 1.5,1.6: We provide a constraint DSL. It includes a string format for readability when practical, similar to many CSP solvers. The application code contains a constraint solver to check them.
