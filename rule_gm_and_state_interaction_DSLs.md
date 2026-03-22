@@ -19,7 +19,7 @@
     3. Speed - so we can play it sooner rather than later
 
 ## Criteria for a Good Solution
-For 1.1, ensure maximum flexibility for different game systems. Transformations and constraints, whether from rules, the GM, or the world itself, should be agnostic to any particular game system's language. Each transformation or constraint should be as composable as composable as possible to ensure they can be can programmatically enforced and executed. See the Constraint DSL for additional details.
+For 1.1, ensure maximum flexibility for different game systems. Transformations and constraints, whether from rules, the GM, or the world itself, should be agnostic to any particular game system's language. Each transformation or constraint should be maximally composable to ensure they can be can programmatically enforced and executed. See the Constraint DSL for additional details.
 
 ## Solutions
 To facilitate composability, all solutions are normalized to graph nodes and edges. Every node and edge within the following game state graph is transformable and constrainable via its following DSLs. Further, each DSL's items are as single-responsiblity and composable as possible.
