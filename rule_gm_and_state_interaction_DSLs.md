@@ -19,13 +19,13 @@
    3. Speed - so we can play it sooner rather than later
 
 ## Criteria for a Good Solution
-- for 1.1, Maximum Composability - rule atoms and act should be composable as possible, thus as granular and single-concept, to ensure all rule transformations and constraints can programmatically enforced and executed.
+For 1.1, ensure maximum flexibility for different game systems. Transformations and constraints, whether from rules, the GM, or the world itself, should be agnostic to any particular game system's language. Each transformation or constraint should be as composable as composable as possible to ensure they can be can programmatically enforced and executed. See the Constraint DSL for additional details.
 
 ## Solution
 To facilitate composability, all solutions are normalized to graph nodes and edges. Every node and edge within the following game state graph is transformable and constrainable via its following DSLs. Further, each DSL's items are as single-responsiblity and composable as possible.
 
 ### Example World State Format
-- For 1.2-1.10 & 2.1-2.3, we express all possible influences on the game state including transformation rules, constraint rules, rule overrides, player acts, and all other game data as part of the game state.
+For 1.2-1.10 & 2.1-2.3, we express all possible influences on the game state including transformation rules, constraint rules, rule overrides, player acts, and all other game data as part of the game state.
 
 [Additional Example Cases](https://docs.google.com/spreadsheets/d/1HOTb7OyPEe5LN2MiTD6JkP0n9DY2IOPA5xGQkWnbEEI/edit?gid=1721436380#gid=1721436380&range=C4)
 
@@ -66,6 +66,21 @@ For transforms - 1.2-1.4: We provide a transform DSL. The application code conta
 
 ### Constraint DSL
 For constraints and state validity - 1.5,1.6: We provide a constraint DSL. It includes a string format for readability when practical, similar to many CSP solvers. The application code contains a constraint solver to check them.
+
+Consider a spatial conflict constraint: "Space conflict occurs when the temporal mode is Combat, and a creature occupies Map_Tile, and another creature enters Map_Tile during their turn, and both creatures are size small or greater, and each creature differs in size by <= 2, and the current time is Turn End."
+
+That constraint implies many sub-constraints and transformations. Writing a function for each combination of constraints is infeasible. This DSL addresses feasibility with a small set of constraint operations that can be composed into any larger constraint, much like the english does. The final step of rulebook ingestion a set of concept nodes, relationship edges (including transformations), and a set of constraints comprised from the Constraint DSL's items. (TBD if that statement works for Alan)
+
+```txt
+[requires, "PHB_REF_3", Occupies, [xor, [
+   [exists, "PHB_REF_4", "source==TimeMode && type==Value && sink==NonCombat", "world_state_edges"],
+   [and,"PHB_REF_5", [
+      [exists, "PHB_REF_6", "source==TickPhase && type==Value && sink=='TurnEnd'", "world_state_edges"],
+      [exists, "source==TimeMode && type==Value && sink==Combat", "world_state_edges"],
+      [eq, 1, [count, [filter, "type==Occupies && source==Creature && sink==required_node_sink", "world_state_edges"]]]
+   ]]
+]]]
+```
 
 Note: the constraints may change if implementing a CSP solver is significantly slower than adopting a library to do it.
 
