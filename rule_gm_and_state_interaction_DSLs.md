@@ -21,10 +21,10 @@
 ## Criteria for a Good Solution
 For 1.1, ensure maximum flexibility for different game systems. Transformations and constraints, whether from rules, the GM, or the world itself, should be agnostic to any particular game system's language. Each transformation or constraint should be maximally composable to ensure they can be can programmatically enforced and executed. See the Constraint DSL for additional details.
 
-## Example Format & Solution DSLs
-To facilitate composability, all solutions are normalized to graph nodes and edges. Every node and edge within the following game state graph is transformable and constrainable via its following DSLs. Further, each DSL's items are as single-responsiblity and composable as possible.
+## Solutions
+To facilitate composability, all solutions are normalized to graph nodes and edges in the game state. Every node and edge within the following game state graph is transformable and constrainable via its following DSLs. Further, each DSL's items are as single-responsiblity and composable as possible.
 
-### Example World State Format
+### Game State
 
 For 1.2-1.10 & 2.1-2.3, we express all possible influences on the game state including transformation rules, constraint rules, rule overrides, player acts, and all other game data as part of the game state. Below is a minimal example, and here are [additional examples](https://docs.google.com/spreadsheets/d/1HOTb7OyPEe5LN2MiTD6JkP0n9DY2IOPA5xGQkWnbEEI/edit?gid=1721436380#gid=1721436380&range=C4).
 
@@ -35,19 +35,22 @@ For 1.2-1.10 & 2.1-2.3, we express all possible influences on the game state inc
   rulset_constraints:[], // enforces edge constraints
   campaign_state_nodes:[], // campaign-specific instances of ruleset_nodes
   campaign_state_edges:[], // campaign-specific instances of ruleset_edges
-  campaign_state_patches:[], undoable/replayable patches appended when time Ticks
+  game_state_patches:[], undoable/replayable patches to the game state. Appended when time Ticks or the GM overrides something.
 }
 ```
 
+### DSLs
 
 
-### English DSL
+
+
+#### English DSL
 For GM interactions (1.3,1.7-1.9) we provide an english DSL (e.g. "Bob moves west"). The application code converts that english DSL into transforms and constraints.
 
 [Examples here](https://docs.google.com/spreadsheets/d/1HOTb7OyPEe5LN2MiTD6JkP0n9DY2IOPA5xGQkWnbEEI/edit?gid=1637849901#gid=1637849901&range=A1) for now.
 
 
-### Transformation DSL
+#### Transformation DSL
 For transforms - 1.2-1.4: We provide a transform DSL. The application code contains a transformation function to create patches from those transforms, and apply those patches to the world state. Patches are applied on each "Tick".
 
 | Data format | Note |
@@ -62,7 +65,7 @@ For transforms - 1.2-1.4: We provide a transform DSL. The application code conta
 | [delete, edge_id] | deletes the edge |
 | [create, source, sink] | creates a new edge |
 
-### Constraint DSL
+#### Constraint DSL
 For constraints and state validity - 1.5,1.6: We provide a constraint DSL. It includes a string format for readability when practical, similar to many CSP solvers. The application code contains a constraint solver to check them.
 
 Consider a spatial conflict constraint: "Space conflict occurs when the temporal mode is Combat, and a creature occupies Map_Tile, and another creature enters Map_Tile during their turn, and both creatures are size small or greater, and each creature differs in size by <= 2, and the current time is Turn End."
