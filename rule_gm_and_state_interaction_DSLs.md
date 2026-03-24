@@ -1,4 +1,34 @@
-# Command Line to Rule Atom Connections
+# Game Engine
+
+- [Game Engine](#game-engine)
+  - [Definitions](#definitions)
+  - [Further Definition Context](#further-definition-context)
+  - [Spec](#spec)
+  - [Solution](#solution)
+    - [`GameEngine` CLI Reference](#gameengine-cli-reference)
+    - [`GameEngine` CLI Usage Details](#gameengine-cli-usage-details)
+      - [`init`](#init)
+      - [`apply_transform` (most common use case)](#apply_transform-most-common-use-case)
+      - [`create_transform`](#create_transform)
+      - [`apply_next_transform`](#apply_next_transform)
+      - [`apply_all_transforms`](#apply_all_transforms)
+      - [`test_transform`](#test_transform)
+    - [`GameEngine` CLI Implementation Details](#gameengine-cli-implementation-details)
+      - [`$ GameEngine create_transform "example"` details](#-gameengine-create_transform-example-details)
+    - [Data Shapes](#data-shapes)
+      - [Ruleset Data Shape](#ruleset-data-shape)
+      - [Campaign Data Shape](#campaign-data-shape)
+      - [Game State Shape](#game-state-shape)
+    - [DSLs](#dsls)
+      - [Transformation DSL (english \& programmatic)](#transformation-dsl-english--programmatic)
+      - [Ruleset Node DSL](#ruleset-node-dsl)
+      - [Ruleset Edge DSL](#ruleset-edge-dsl)
+      - [Campaign Nodes](#campaign-nodes)
+      - [Campaign Edges](#campaign-edges)
+      - [Ruleset Constraint DSL](#ruleset-constraint-dsl)
+        - [Constraint Operators](#constraint-operators)
+        - [Example Constraint Operator Composition](#example-constraint-operator-composition)
+      - [Game State Patch DSL](#game-state-patch-dsl)
 
 
 ## Definitions
@@ -68,12 +98,21 @@ See "`GameEngine` CLI Usage Details" for more.
 
 All game transforms are queued into and resolved from the `{unresolved_transforms:[]}` queue on the Game State object.
 
-#### `$ GameEngine init path_to_rules path_to_campaign path_to_game_state`
+
+#### `init`
+`$ GameEngine init path_to_rules path_to_campaign path_to_game_state`
 Initializes a file at path_to_game_state. It contains a Game State object with appropriate rules from path_to_rules, campaign data from path_to_campaign, and emtpy queues of unresolved_transforms and game_state_patches.
 
 Returns a useful error when rules or campaign files are absent, either are malformed, or path_to_state exists.
 
-#### `$ GameEngine create_transform "example"`
+#### `apply_transform` (most common use case)
+
+`$ GameEngine apply_transform "example"`
+
+Shorthand for `GameEngine queue_transform "example" && GameEngine apply_all_transforms`
+
+#### `create_transform`
+`$ GameEngine create_transform "example"`
 Creates all transforms appropriate for the example scenario, prepends them to `game_state.unresolved_transforms`, and saves the game state file.
 
 Returns a useful error when the passed scenario does not match a valid Transformation DSL format.
@@ -83,16 +122,20 @@ Example scenarios include:
 - **"Bob casts fireball on Bob"** In this case, creates transforms appropriate for bob to cast fireball at a point centered on himself. Created transforms are automatically expanded with related transforms like targeting and resolution paths, as well as any time advancements appropriate for the transform, game state, and ruleset (like consuming Bob's action, or a "Tick" of 6 seconds for a combat turn.)
 - **"override ...example..."** Creates an override transform for existing ruleset_nodes and ruleset_edges. Unlike other transforms, override patches don't change campaign_edges. Instead they go to ruleset_nodes_overrides or ruleset_edges_overrides for rule lookups.
 
-#### `$ GameEngine apply_next_transform`
+#### `apply_next_transform`
+`$ GameEngine apply_next_transform`
+
 Validates the last item in `game_state.unresolved_transforms` against the rules, pops it off the queue, creates a patch for it, applies the patch to the game state, queues the patch into game_state_patches, and saves the game state file.
 
-#### `$ GameEngine apply_all_transforms`
+#### `apply_all_transforms`
+`$ GameEngine apply_all_transforms`
 Calls apply_next_transform until the unresolved_transforms queue is empty.
 
-#### `$ GameEngine apply_transform "example"`
-Shorthand for `queue_transform "example" && apply_all_transforms`
 
-#### `$ GameEngine test_transform "example"` [for internal testing] Identical to "create_transform", but returns successful results as text. Does not modify 'unresolved_transforms' or save the game state file.
+
+#### `test_transform`
+`$ GameEngine test_transform "example"`
+\[for internal testing] Identical to "create_transform", but returns successful results as text. Does not modify 'unresolved_transforms' or save the game state file.
 
 ### `GameEngine` CLI Implementation Details
 
@@ -122,7 +165,7 @@ Problems in the transformation include:
 ### Data Shapes
 TODO restate which problems these solve to match the updated definitions and problems
 
-#### Ruleset Shape
+#### Ruleset Data Shape
 ```txt
 {
   ruleset_nodes:[], // List of concepts in the ruleset (e.g. Creature, PC, Multiverse, Plane, Map, TimeMode, TimeIncrement)
