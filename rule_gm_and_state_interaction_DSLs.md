@@ -1,89 +1,227 @@
-# State Transformation Syntax
+# Command Line to Rule Atom Connections
 
 
-## Problem
-1. We want to play a game where:
-    1. Rules from rule sources are highly variable
-    2. Rules from rule sources transform the world while playing
-    3. The GM transforms the world for players when they Act while playing
-    4. The world maintains its ongoing transforms while playing
-    5. Rules from rule sources constrain transformations while playing
-    6. The world is always in a valid state.
-    7. The GM can override rules while playing.
-    8. The GM can easily undo world transformations while playing.
-    9. The GM can easily trace rule provenance back to its source while playing.
-    10. The GM can suspend a game without losing the state of the world or rules while playing.
+## Definitions
+1. A "RPG" is a subset of all conceptual games called "Role Playing Games".
+2. A "Ruleset" is a graph of concepts (nodes) and relationships between them (edges) that define how to play an RPG together (e.g. creature, creatures may wear things, things is a superset of equipment, time progresses in x increments).
+3. "A Time Schema" refers to a ruleset-defined cluster of time concepts and relationships (e.g. speed, distance, forward, back, groupings, orderings, duration)
+4. "A Space Schema" refers to a ruleset-defined cluster of space concepts and relationships (e.g. proximity, groupings, distance, direction, orderings, length, width)
+5. "A Spacetime Schema" refers to one pairing of a space schema and a time schema, and any relationships specific to it. (e.g. velocity)
+6. "A Game" refers to an instantiation of a rulset's abstract concepts for shared RPG play, combined with the ruleset as a memory aid during play.
+7. "A SpaceTime" is an instantiated Spacetime Schema in a game, including all points in its time and space
+8. "Spacetime Time" is the collection of all Time Points in a Spacetime
+9. "Spacetime Space" is the collection of all Space Points in a Spacetime
+10. A "Time Point" refers to an infinitely small slice of Spacetime Time paired with all of Spacetime Space
+11. A "Space Point" refers to an infinitely small slice of Spacetime Space paired with all of Spacetime Time
+12. "A SpaceTime Point" is a Space Point paired with a Time Point
+13. "A SpaceTime Evironment" references all instantiated concepts that relate to a single Spacetime, including their relations to the SpaceTime and each other (e.g. bob, down, bob is wearing a sword, bob is falling down)
+14. A "Spacetime Clock" is a discrete numerical value that corresponds to a Spacetime's Time Points. It enables relationships in the Spacetime Environment to change.
+15. "The Campaign" is a unique reference to all SpaceTime Environments in a game
+16. "The Game Clock" is a monotonically increasing discrete numerical value that provides a stable comparison for Spacetime Clocks
+17. A "Game State" is a snapshot of the Ruleset and Spacetime Environments at a single Game Clock value
+18. A "Transformation" is a specification for changing one or more relationships in a Game, including rules, constraints, clocks, and spacetime environments.
+19. A "Constraint" is a rule that defines whether a game's relationships are valid according to the ruleset. (e.g. "CreatureA rides CreatureB" might require a constraint like: creatureA size <= creatureB size)
+
+## Further Definition Context
+1. Rulesets come from rulebooks and similiar sources
+2. Many rulesets exist.
+3. Concepts, meanings, and relationships often differ between rulesets.
+4. Concepts, meanings, and relationships may be explicit or implicit.
+5. Rulsets may include continuous concepts like time and space, and discrete concepts like integers.
+6. Discrete concepts and relationships may be ordered (e.g. ordinal, sequential) or unordered (e.g. categorical).
+7. Discrete concepts and relationships may be grouped in mutually exclusive and inclusive ways. (e.g. Space: A state is a distinct entity. "The midwest" is a spatially contiguous group of states. "Square states" is a non-contiguous group.) (e.g. Time: "span" is an ordered contiguous group. "the good years" is an unordered non-contiguous group.).
+8. Rulesets may define other relationships, like representations (map represents country), synonyms (big is like large), subsets (human is a subset of race) and attributes (bob is race human, or bob is large)
+9. A ruleset may have one or more Space Schemas, Time Schemas, and SpaceTime Schemas.
+10. Instantiated concepts may be named differently from abstract concepts, but require some reference to the abstract concept in order to apply the rules correctly.
+
+## Spec
+1. We want to play a campaign where:
+    1. A game master (GM) controls the Game and facilitates all Transformations
+    2. A Game Engine handles all in-progress changes within a Game
+    3. A Game Engine uses constraints to ensure the game state is always valid, either by preventing transformations that would cause invalid relationships, or undoing transformations that caused invalid relationships.
+    4. The GM can easily override the ruleset while playing.
+    5. The GM can easily undo world transformations while playing.
+    6. The GM can easily trace rule provenance back to its rulebook origin while playing.
+    7. The GM interacts with the game via a Command Line CLI
+    8. The GM can easily suspend a game by doing nothing.
 2. Non-functional Requirements
     1. Testability - to prevent bugs
     2. Reliability
     3. Speed - so we can play it sooner rather than later
+    4. Flexibility - Transformations and Constraints, whether from rules, the GM, or the world itself, should be agnostic to any particular game system's language.
+    5. Composability - for flexibility. Each transformation or constraint should be maximally composable to ensure they can express any ruleset and be programmatically enforced and executed.
 
-## Criteria for a Good Solution
-For 1.1, ensure maximum flexibility for different game systems. Transformations and constraints, whether from rules, the GM, or the world itself, should be agnostic to any particular game system's language. Each transformation or constraint should be maximally composable to ensure they can be can programmatically enforced and executed. See the Constraint DSL for additional details.
+## Solution
 
-## Solutions
-To facilitate composability, all solutions are normalized to graph nodes and directed edges in the game state, making it largely a collection of adjacency lists. Every node and edge within the following game state graph is transformable and constrainable via its following DSLs. Further, each DSL's items are as single-responsiblity and composable as possible (or will be after we iterate on them).
+### `GameEngine` CLI Reference
 
-### Game State
+- `$ GameEngine init path_to_rules path_to_campaign path_to_state` initializes a Game State object in a file at 'path_to_state', using the passed rules and campaign files
+- `$ GameEngine apply_transform "example"` [most common case] creates transforms appropriate for the example and applies them to the game state. Shorthand for 'create_transform "example" && apply_all_transforms'.
+- `$ GameEngine create_transform "example"` Creates all transforms appropriate for the 'example' scenario, prepends them to 'game_state.unresolved_transforms', and saves the game state file. Nothing else.
+- `$ GameEngine apply_next_transform` pops and applies the last transform in the 'unresolved_transforms' queue to the game state.
+- `$ GameEngine apply_all_transforms` repeatedly calls 'apply_next_transform' until the 'unresolved_transforms' queue is empty.
+- `$ GameEngine test_transform "example"` for internal_testing. Identical to 'create_transform', but returns transforms as text instead of modifying 'unresolved_transforms'.
 
-For 1.2-1.10 & 2.1-2.3, we express all possible influences on the game state including transformation rules, constraint rules, rule overrides, player acts, and all other game data as part of the game state. Below is a minimal example, and here are [additional examples](https://docs.google.com/spreadsheets/d/1HOTb7OyPEe5LN2MiTD6JkP0n9DY2IOPA5xGQkWnbEEI/edit?gid=1721436380#gid=1721436380&range=C4).
+See "`GameEngine` CLI Usage Details" for more.
 
-```txt
+### `GameEngine` CLI Usage Details
+
+All game transforms are queued into and resolved from the `{unresolved_transforms:[]}` queue on the Game State object.
+
+#### `$ GameEngine init path_to_rules path_to_campaign path_to_game_state`
+Initializes a file at path_to_game_state. It contains a Game State object with appropriate rules from path_to_rules, campaign data from path_to_campaign, and emtpy queues of unresolved_transforms and game_state_patches.
+
+Returns a useful error when rules or campaign files are absent, either are malformed, or path_to_state exists.
+
+#### `$ GameEngine create_transform "example"`
+Creates all transforms appropriate for the example scenario, prepends them to `game_state.unresolved_transforms`, and saves the game state file.
+
+Returns a useful error when the passed scenario does not match a valid Transformation DSL format.
+
+Example scenarios include:
+- **"6 seconds pass"** Only transforms game time and any other active timers in `game_state.campaign_edges`.
+- **"Bob casts fireball on Bob"** In this case, creates transforms appropriate for bob to cast fireball at a point centered on himself. Created transforms are automatically expanded with related transforms like targeting and resolution paths, as well as any time advancements appropriate for the transform, game state, and ruleset (like consuming Bob's action, or a "Tick" of 6 seconds for a combat turn.)
+- **"override ...example..."** Creates an override transform for existing ruleset_nodes and ruleset_edges. Unlike other transforms, override patches don't change campaign_edges. Instead they go to ruleset_nodes_overrides or ruleset_edges_overrides for rule lookups.
+
+#### `$ GameEngine apply_next_transform`
+Validates the last item in `game_state.unresolved_transforms` against the rules, pops it off the queue, creates a patch for it, applies the patch to the game state, queues the patch into game_state_patches, and saves the game state file.
+
+#### `$ GameEngine apply_all_transforms`
+Calls apply_next_transform until the unresolved_transforms queue is empty.
+
+#### `$ GameEngine apply_transform "example"`
+Shorthand for `queue_transform "example" && apply_all_transforms`
+
+#### `$ GameEngine test_transform "example"` [for internal testing] Identical to "create_transform", but returns successful results as text. Does not modify 'unresolved_transforms' or save the game state file.
+
+### `GameEngine` CLI Implementation Details
+
+#### `$ GameEngine create_transform "example"` details
+
+TBD on what steps the English DSL must go through to become its final representation, but the result will be an adjacency list, and may contain tuples like this:
+
+"Bob hurls a fireball at the Orc" becomes...
+```js
 {
-  ruleset_nodes:[], // concepts in the ruleset (e.g. Creature, PC, Multiverse, Plane, Map, TimeIncrement)
-  ruleset_edges:[], // valid directed node>node edge types. Includes static relations (e.g. chest contains sword. creature is superset of PC.) and dynamic relations aka transformations (PC moves to Tile)
-  rulset_constraints:[], // enforces edge constraints
-  campaign_state_nodes:[], // campaign-specific instances of ruleset_nodes
-  campaign_state_edges:[], // campaign-specific instances of ruleset_edges
-  game_state_patches:[], undoable/replayable patches to the game state. Appended when time Ticks or the GM overrides something.
+  unresolved_transforms:[ // as tuples
+  // id     source    type        sink
+    ['fb',  'bob',    'casts',    'fireball'],
+    ['t',   'fb',     'targets',  'tile2'],
+  ]
 }
 ```
 
+Problems in the transformation include:
+1. Fireball requires a map-point-center to target, not a creature.
+2. Any synonyms in source, type, and sink must be resolved to ruleset language. For example, "hurls" isn't a term in ruleset_nodes, nor is it defined as a synonym in ruleset_edges, but the game engine needs a way to resolve the term "hurls" to "casts". Options might include hard-interrupting the GM to ask them to add an override, or less-interruptive resolutions like suggesting some synonyms and asking for approval, or asking if the GM meant a term from the ruleset_nodes, like "casts".
+3. All edges necessary to relate the concepts to appropriate campaign_edges, campaign_nodes, ruleset_nodes, and ruleset_edges must be created.
+4. All edges appropriate to specify and resolve time and spatial resolution must be created.
+
+
+
+### Data Shapes
+TODO restate which problems these solve to match the updated definitions and problems
+
+#### Ruleset Shape
+```txt
+{
+  ruleset_nodes:[], // List of concepts in the ruleset (e.g. Creature, PC, Multiverse, Plane, Map, TimeMode, TimeIncrement)
+  ruleset_edges:[], // Adjacency list of all ruleset relationships. Includes dynamic relationships (e.g. Creature moves to Tile, Creature mounts Creature) and static relations (e.g. Map contains Tile. Creature is superset of Character. Walks is synonym for "Moves to".).
+  rulset_constraints:[], // Adjacency list of Constraints
+}
+```
+
+#### Campaign Data Shape
+```txt
+{
+  ruleset_nodes_overrides:[], // Unordered list of gm-created rules that reference the ruleset_nodes they override.
+  ruleset_edges_overrides:[], // Unordered list of gm-created rules that reference the ruleset_edges they override.
+  campaign_state_nodes:[], // Unordered list of campaign-specific nodes that reference the underlying ruleset nodes e.g. `{name:Bob, reference:PC}`
+  campaign_state_edges:[], // campaign-specific instances of edges between the nodes. e.g. a tuple like [Tile2, contains, firewall] if < 5 properties are necessary. Otherwise a record like `{source:Tile2, type:contains, sink:firewall}`. Avoid adding properties since they add complexity.
+}
+```
+
+#### Game State Shape
+Enables state saving. It leverages adjacency lists to stay extremely flat. The flatness trades speed for flexibility. Speed probably won't matter, but if it does we can always trade memory for speed with graph query caching.
+
+[additional examples](https://docs.google.com/spreadsheets/d/1HOTb7OyPEe5LN2MiTD6JkP0n9DY2IOPA5xGQkWnbEEI/edit?gid=1721436380#gid=1721436380&range=C4).
+
+```txt
+{
+  ruleset_nodes:[],         // from Ruleset Object
+  ruleset_edges:[],         // from Ruleset Object
+  rulset_constraints:[],    // from Ruleset Object
+  campaign_state_nodes:[],  // from Campaign Object
+  campaign_state_edges:[],  // from Campaign Object
+  unresolved_transforms:[]  // FIFO queue of Transform DSL objects.
+  game_state_patches:[],    // Chronological list of Game State Patch DSL objects.
+  game_clock:0
+}
+```
+
+
 ### DSLs
+Languages to express nodes, edges, transformations, and constraints.
+TODO restate which problems these solve to match the updated definitions and problems
 
+#### Transformation DSL (english & programmatic)
+The transformation DSL enables GM interactions and programmatic transformations.
 
-
-
-#### English DSL
-For GM interactions (1.3,1.7-1.9) we provide an english DSL (e.g. "Bob moves west"). The application code converts that english DSL into transforms and constraints.
-
-[English DSL Examples here](https://docs.google.com/spreadsheets/d/1HOTb7OyPEe5LN2MiTD6JkP0n9DY2IOPA5xGQkWnbEEI/edit?gid=1637849901#gid=1637849901&range=A1) for now.
-
-
-#### Transformation DSL
-For transforms - 1.2-1.4: We provide a transform DSL. The application code contains a transformation function to create patches from those transforms, and apply those patches to the game state. Patches are applied on each "Tick" and on GM overrides.
-
-| Data format | Note |
+| English format | Edge format |
 | ------------- | --------------- |
-| // list transforms | |
-| [map, transform, collection] | |
-| [filter, transform, collection] | |
-| [omit, transform, collection] | |
+| Bob attacks Orc | `{type:'attack',source:'Bob',sink:'Orc'}` |
+| Bob casts fireball at Orc | TBD. Requires multiple to express them as simple edges. |
 | | |
 | // edge transforms | |
 | [set, edge_id, new_sink_value] | sets existing edge value |
 | [delete, edge_id] | deletes the edge |
 | [create, source, sink] | creates a new edge |
+| | |
+| // list transforms | |
+| [map, transform, collection] | |
+| [filter, transform, collection] | |
+| [omit, transform, collection] | |
 
-#### Constraint DSL
-For constraints and state validity - 1.5,1.6: We provide a constraint DSL. It includes a string format for readability when practical, similar to many CSP solvers. The application code contains a constraint solver to check them.
 
-Consider a spatial conflict constraint: "Space conflict occurs when the temporal mode is Combat, and a creature occupies Map_Tile, and another creature enters Map_Tile during their turn, and both creatures are size small or greater, and each creature differs in size by <= 2, and the current time is Turn End."
+[Previous English DSL Examples here](https://docs.google.com/spreadsheets/d/1HOTb7OyPEe5LN2MiTD6JkP0n9DY2IOPA5xGQkWnbEEI/edit?gid=1637849901#gid=1637849901&range=A1) for now.
 
-That constraint implies many sub-constraints and transformations. Writing a function for each combination of constraints is infeasible. This DSL addresses feasibility with a small set of constraint operations that can be composed into any larger constraint, much like the english does. The final step of rulebook ingestion a set of concept nodes, relationship edges (including transformations), and a set of constraints comprised from the Constraint DSL's items. (TBD if that statement works for Alan)
+#### Ruleset Node DSL
+Language to specify independent concepts in the rulebook.
 
-```txt
-[requires, "PHB_REF_3", Occupies, [xor, [
-   [exists, "PHB_REF_4", "source==TimeMode && type==Value && sink==NonCombat", "campaign_state_edges"],
-   [and,"PHB_REF_5", [
-      [exists, "PHB_REF_6", "source==TickPhase && type==Value && sink=='TurnEnd'", "campaign_state_edges"],
-      [exists, "source==TimeMode && type==Value && sink==Combat", "campaign_state_edges"],
-      [eq, 1, [count, [filter, "type==Occupies && source==Creature && sink==required_node_sink", "campaign_state_edges"]]]
-   ]]
-]]]
-```
+{name:string}
+Example
+{name:"sword"}
+{name:"cast"}
+{name:"attack"}
 
-Note: the constraints may change if implementing a CSP solver is significantly slower than adopting a library to do it.
+#### Ruleset Edge DSL
+Language to specify relations between concepts in the rulebook.
+
+`{source:string,type:string,sink:string}`
+
+Examples:
+`{source:'Bob',type:'cast',sink:'Bob'}`
+`{source:'Bob',type:'cast',sink:'Tile2'}`
+`{source:'Bob',type:'attack',sink:'Orc'}`
+
+#### Campaign Nodes
+
+Same as Ruleset Node DSL
+
+#### Campaign Edges
+
+Same as Ruleset Edge DSL
+
+#### Ruleset Constraint DSL
+For expressing constraints. It includes a string format for simple comparisons, similar to many CSP solvers. The Game Engine should contain a constraint solver to check them.
+
+Constraints can get complex. For example, "Space conflict occurs when the temporal mode is Combat, and a creature occupies Map_Tile, and another creature enters Map_Tile during their turn, and both creatures are size small or greater, and each creature differs in size by <= 2, and the current time label is Turn End." That constraint implies many sub-constraints and transformations. Writing a function for each combination of constraints is infeasible.
+
+This DSL supports complex constraints with operators that compose, much like "and", "or","during", and "differs" in the original english.
+
+It is an intial take, and needs exploration to ensure it makes sense and enables the Game Engine to programmatically enforce the constraints with a CSP solver.
+
+##### Constraint Operators
 
 | Data format | String format |
 | ------------- | --------------- |
@@ -109,5 +247,24 @@ Note: the constraints may change if implementing a CSP solver is significantly s
 | | |
 | // requirements/dependencies: [name, rulebook_reference, edge_source, collection] | |
 | \[requires, rulebook_reference, edge_source, constraint] | |
-| | |
+
+
+##### Example Constraint Operator Composition
+
+```txt
+[requires, "PHB_REF_3", Occupies, [xor, [
+   [exists, "PHB_REF_4", "source==TimeMode && type==Value && sink==NonCombat", "campaign_state_edges"],
+   [and,"PHB_REF_5", [
+      [exists, "PHB_REF_6", "source==TickPhase && type==Value && sink=='TurnEnd'", "campaign_state_edges"],
+      [exists, "source==TimeMode && type==Value && sink==Combat", "campaign_state_edges"],
+      [eq, 1, [count, [filter, "type==Occupies && source==Creature && sink==required_node_sink", "campaign_state_edges"]]]
+   ]]
+]]]
+```
+
+#### Game State Patch DSL
+
+Undoable/replayable diff of a transform application's changed nodes and edges in `campaign_state_nodes` and `campaign_state_edges`.
+
+Format TBD
 
