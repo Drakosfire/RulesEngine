@@ -33,7 +33,7 @@
 
 ## Definitions
 1. A "RPG" is a subset of all conceptual games called "Role Playing Games".
-2. A "Ruleset" is a graph of concepts (nodes) and relationships between them (edges) that define how to play an RPG together (e.g. creature, creatures may wear things, things is a superset of equipment, time progresses in x increments).
+2. A "Ruleset" is a graph of concepts (nodes) and relationships between them (edges) that define how to play a RPG together (e.g. creature, creatures may wear things, things is a superset of equipment, time progresses in x increments).
 3. "A Time Schema" refers to a ruleset-defined cluster of time concepts and relationships (e.g. speed, distance, forward, back, groupings, orderings, duration)
 4. "A Space Schema" refers to a ruleset-defined cluster of space concepts and relationships (e.g. proximity, groupings, distance, direction, orderings, length, width)
 5. "A Spacetime Schema" refers to one pairing of a space schema and a time schema, and any relationships specific to it. (e.g. velocity)
@@ -170,7 +170,7 @@ TODO restate which problems these solve to match the updated definitions and pro
 {
   ruleset_nodes:[], // List of concepts in the ruleset (e.g. Creature, PC, Multiverse, Plane, Map, TimeMode, TimeIncrement)
   ruleset_edges:[], // Adjacency list of all ruleset relationships. Includes dynamic relationships (e.g. Creature moves to Tile, Creature mounts Creature) and static relations (e.g. Map contains Tile. Creature is superset of Character. Walks is synonym for "Moves to".).
-  rulset_constraints:[], // Adjacency list of Constraints
+  rulset_constraints:[], // Adjacency list of Constraints expressed with the Ruleset Constraint DSL.
 }
 ```
 
@@ -256,7 +256,7 @@ Same as Ruleset Node DSL
 Same as Ruleset Edge DSL
 
 #### Ruleset Constraint DSL
-For expressing constraints. It includes a string format for simple comparisons, similar to many CSP solvers. The Game Engine should contain a constraint solver to check them.
+For expressing constraints. It includes a string format for simple comparisons, similar to many CSP solvers. The Game Engine should apply a CSP solver to check them.
 
 Constraints can get complex. For example, "Space conflict occurs when the temporal mode is Combat, and a creature occupies Map_Tile, and another creature enters Map_Tile during their turn, and both creatures are size small or greater, and each creature differs in size by <= 2, and the current time label is Turn End." That constraint implies many sub-constraints and transformations. Writing a function for each combination of constraints is infeasible.
 
