@@ -35,40 +35,39 @@
 1. A Graph is a collection of concepts and relationships between them
 2. A Node is a concept in a graph
 3. An Edge is a relationship between two Nodes
-4. A "Source" is an Edge's origin Node
-5. A "Sink" is an Edge's terminus Node
-6. A "RPG" is a subset of all conceptual games called "Role Playing Games".
-7. A "Rulebook" is an english text that defines how to play a single type of RPG together.
-8. A "Ruleset" is a directed acyclical Graph (DAG) projection of a Rulebook.
-9. A "Ruleset Node" is a single Rulebook concept (e.g. Creature, Combat, Rest)
-10. An "Ruleset Edge" is a directed relationship between Ruleset Nodes (e.g. Creatures may wear Equipment, Equipment is a superset of Sword)
-11. An "Edge Type" is a type of relationship. Examples include: synonym, hierarchy, containment, superset, condition, attribute, unary constraint, binary constraint, n-ary constraint.
-12. Where nodes are concepts in a rulebook and edges are relationships between those concepts and other relationships (e.g. creature, creatures may wear things, things is a superset of equipment, time progresses in x increments).
-13. An "Element" is a node or edge in a Ruleset.
-14. A "Rule" is a composition of one or more Elements.
-15. "A Time Schema" refers to a ruleset-defined cluster of time-semantic elements (e.g. speed, distance, forward, back, groupings, orderings, duration).
-16. "A Space Schema" refers to a ruleset-defined cluster of space-semantic elements (e.g. proximity, groupings, distance, direction, orderings, length, width)
-17. "A Spacetime Schema" refers to one pairing of a space schema and a time schema, and any relationships specific to it. (e.g. velocity)
-18. "A Game" refers to an instantiation of a rulset's abstract concepts for shared RPG play, combined with the ruleset as a memory aid during play.
-19. "A SpaceTime" is an instantiated Spacetime Schema in a game, including all points in its time and space
-20. "Spacetime Time" is the collection of all Time Points in a Spacetime
-21. "Spacetime Space" is the collection of all Space Points in a Spacetime
-22. A "Time Point" refers to an infinitely small slice of Spacetime Time paired with all of Spacetime Space
-23. A "Space Point" refers to an infinitely small slice of Spacetime Space paired with all of Spacetime Time
-24. "A SpaceTime Point" is a Space Point paired with a Time Point
-25. "A SpaceTime Evironment" references all concrete Element instances that relate to a single Spacetime, including their relations to the SpaceTime and each other (e.g. bob, down, bob is wearing a sword, bob is falling down)
-26. A "Spacetime Clock" is a discrete numerical value that corresponds to a Spacetime's Time Points. It enables relationships in the Spacetime Environment to change.
-27. "The Campaign" is a unique reference to all SpaceTime Environments in a game
-28. "A Campaign Node" is a unique concept in a Campaign
-29. "A Campaign Edge" is a unique edge (of Edge Type), between Campaign Nodes. e.g. "chest contains sword", "Creature superset Bob"
-30. "A Campaign Element" references a Campaign Node or Campaign Edge
-31. A "Constraint Rule" is a subset of Rules with the purpose of validating Campaign Elements (e.g. "CreatureA rides CreatureB" might require a constraint like: creatureA size <= creatureB size)
-32. "A Game Node" is a Ruleset Node or Campaign Node
-33. "A Game Edge" is a Ruleset Edge or Campaign Edge
-34. "A Game Element" is a Ruleset Element or Campaign Element
-35. A "Transformation" is a specification for changing one or more Game Elements
-36. "The Game Clock" is a monotonically increasing discrete numerical value that provides a stable comparison for Spacetime Clocks
-37. A "Game State" is a snapshot of all Game Elements at a single Game Clock value
+4. An Element is a Node or Edge
+5. A "Node Type" is a label for a category of Nodes.
+6. An "Edge Type" is a label for a category of Edges. Examples include: synonym, hierarchy, containment, superset, condition, attribute, unary constraint, binary constraint, n-ary constraint.
+7. A "Source" is an Edge's origin Node
+8. A "Sink" is an Edge's terminus Node
+9. A "RPG" is a subset of all conceptual games called "Role Playing Games".
+10. A "Rulebook" is an english text that defines how to play a single type of RPG together.
+11. A "Ruleset" is a directed acyclical Graph (DAG) projection of a Rulebook.
+12. A "Ruleset Node" is a single Rulebook concept (e.g. Creature, Combat, Rest).
+13. An "Ruleset Edge" is a typed Edge between Ruleset Nodes (e.g. Creatures may wear Equipment, Equipment is a superset of Sword, Container can contain Node)
+14. An "Ruleset Element" is a Rule Node or Rule Edge.
+15. Where nodes are concepts in a rulebook and edges are relationships between those concepts and other relationships (e.g. creature, creatures may wear things, things is a superset of equipment, time progresses in x increments).
+16. A "Rule" is a composition of one or more Elements.
+17. "A Time Schema" refers to a ruleset-defined cluster of time-semantic elements (e.g. speed, distance, forward, back, groupings, orderings, duration).
+18. "A Space Schema" refers to a ruleset-defined cluster of space-semantic elements (e.g. proximity, groupings, distance, direction, orderings, length, width)
+19. "A Spacetime Schema" refers to one pairing of a space schema and a time schema, and any relationships specific to it. (e.g. velocity)
+20. "A Game" refers to a unique Ruleset and instantiated versions of the Ruleset Elements, for shared RPG play.
+21. "A Game Ruleset" refers to a unique Ruleset underlying a game's play.
+22. "A Campaign" or "Game Ruleset Instance" refers to the Graph of all instantiated Game Ruleset concepts and relationships in a Game
+23. "A Campaign Node" is a unique Campaign concept. e.g. "Bob", "Bob's Sword", "The Horse Betsy"
+24. "A Campaign Edge" is a unique Campaign relationship. e.g. "The Chest contains Bob's Sword", "Bob rides The Horse Betsy".
+25. "A SpaceTime" is an instance of a SpaceTime Schema in a campaign, including all points in its time and space.
+26. "A SpaceTime Element" references a Campaign Element related only to a single Spacetime.
+27. "Spacetime Time" is the collection of all Time Points in a Spacetime
+28. "Spacetime Space" is the collection of all Space Points in a Spacetime
+29. "A Time Point" refers to an infinitely small slice of Spacetime Time paired with all of Spacetime Space
+30. "A Space Point" refers to an infinitely small slice of Spacetime Space paired with all of Spacetime Time
+31. "A SpaceTime Point" is a Space Point paired with a Time Point
+32. A "Spacetime Clock" is a discrete numerical value that corresponds to a Spacetime's Time Points. It enables Spacetime Elements to change.
+33. "The Game Clock" is a monotonically increasing discrete numerical value that provides a stable comparison for Spacetime Clocks
+34. A "Game State" is a snapshot of all Game Elements at a single Game Clock value
+35. A "Constraint Rule" is a subset of Game Ruleset Edges with the purpose of validating Campaign Elements. e.g. "CreatureA rides CreatureB" might require a constraint like: creatureA size <= creatureB size.
+36. A "Transformation" is a change to one or more Game Elements.
 
 ## Further Definition Context
 1. Rulesets come from rulebooks and similiar sources
