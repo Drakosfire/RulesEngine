@@ -47,7 +47,7 @@
 13. A "Ruleset Edge" is a typed Edge between Ruleset Nodes (e.g. Creatures may wear Equipment, Equipment is a superset of Sword, Container can contain Node)
 14. A "Ruleset Element" is a Rule Node or Rule Edge.
 15. A "Rule" is a composition of one or more Ruleset Elements.
-16. A "Constraint" is a Rule that includes Edge Types like subsets and inequalities for the purpose of validating other Elements. e.g. "A rides B" might only be valid when: "A is Creature && B is Creature && A size <= B size".
+16. A "Constraint" is a Rule that includes Edge Types like subsets and inequalities. It exists for the purpose of validating other Elements. e.g. "A rides B" might only be valid when: "A is Creature && B is Creature && A size <= B size".
 17. "A Time Schema" refers to a to a cluster of time-semantic Rules (e.g. speed, distance, forward, back, groupings, orderings, duration).
 18. "A Space Schema" refers to a cluster of space-semantic Rules (e.g. proximity, groupings, distance, direction, orderings, length, width)
 19. "A Spacetime Schema" refers to one pairing of a space schema and a time schema, and any relationships specific to it. (e.g. velocity)
