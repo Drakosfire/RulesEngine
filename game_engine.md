@@ -41,8 +41,8 @@
 7. A "Source" is an Edge's origin Node
 8. A "Sink" is an Edge's terminus Node
 9. A "RPG" is a subset of all conceptual games called "Role Playing Games".
-10. A "Rulebook" is an english text that defines how to play a single type of RPG.
-11. A "Ruleset" is a directed acyclical Graph (DAG) projection of a Rulebook and/or other texts, containing references back to the original.
+10. A "Rulebook" is a text (book, blog, napkin-back, etc.) that defines or modifies how to play a RPG.
+11. A "Ruleset" is a directed acyclical Graph (DAG) projection of one or more rulebooks, containing references back to the originals.
 12. A "Ruleset Node" is a single Rulebook concept (e.g. Creature, Combat, Rest).
 13. A "Ruleset Edge" is a typed Edge between Ruleset Nodes (e.g. Creatures may wear Equipment, Equipment is a superset of Sword, Container can contain Node)
 14. A "Ruleset Element" is a Rule Node or Rule Edge.
