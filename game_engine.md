@@ -32,10 +32,10 @@
 
 
 ## Definitions
-1. A Graph is a collection of concepts and relationships between them
-2. A Node is a concept in a graph
-3. An Edge is a relationship between two Nodes
-4. An Element is a Node or Edge
+1. A "Graph" is a collection of concepts and relationships between them
+2. A "Node" is a concept in a graph
+3. An "Edge" is a relationship between two Nodes
+4. An "Element" is a Node or Edge
 5. A "Node Type" is a label for a category of Nodes.
 6. An "Edge Type" is a label for a category of Edges. Examples include: synonym, hierarchy, containment, superset, condition, attribute, equality, inequality.
 7. A "Source" is an Edge's origin Node
