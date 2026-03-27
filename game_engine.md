@@ -45,27 +45,26 @@
 11. A "Ruleset" is a directed acyclical Graph (DAG) projection of one or more rulebooks, containing references back to the originals.
 12. A "Ruleset Node" is a single Rulebook concept (e.g. Creature, Combat, Rest).
 13. A "Ruleset Edge" is an Edge between Ruleset Nodes whose type is based on a common linguistic relationships. Type examples include: synonym, hierarchy, containment, superset, condition, attribute, equality, inequality. Edge examples include: Creatures may wear Equipment, Equipment is a superset of Sword, Container may contain Noun.
-14. A "Rule" is a composition of one or more Ruleset Elements.
-15. A "Rule Type" is a label for a concept-based category of Rules useful for discussion, like Fact or Constraint (I'm uncertain if rule types are necessary for Types of rules exist based
-16. A "Constraint" is a Rule that includes Edge Types like subsets and inequalities. It exists for the purpose of validating other Elements. e.g. "A rides B" might only be valid when: "A is Creature && B is Creature && A size <= B size".
-17. "A Time Schema" refers to a to a cluster of time-semantic Rules (e.g. speed, distance, forward, back, groupings, orderings, duration).
-18. "A Space Schema" refers to a cluster of space-semantic Rules (e.g. proximity, groupings, distance, direction, orderings, length, width)
-19. "A Spacetime Schema" refers to one pairing of a space schema and a time schema, and any relationships specific to it. (e.g. velocity)
-20. An "Instance" is a concrete version of a Rule. e.g. Node:Creature -> Bob. e.g. Edge: A rides B -> Bob rides Bob's Horse.
-21. "A Game" refers to a Ruleset paired with its Instances.
-22. "A Game Element" references a single Ruleset Element or Instance in a Game.
-23. "A Campaign" refers to all Game Elements
-24. "A SpaceTime" is a SpaceTime Schema Instance, including all points in its time and space.
-25. "A Time Point" refers to an infinitely small slice of a SpaceTime's time paired with all of its space
-26. "A Space Point" refers to an infinitely small area of a SpaceTime's space paired with all of its time
-27. "SpaceTime Time" is the collection of all Time Points in a SpaceTime
-28. "SpaceTime Space" is the collection of all Space Points in a SpaceTime
-29. "A Space Point" refers to an infinitely small slice of SpaceTime Space paired with all of SpaceTime Time
-30. "A SpaceTime Point" is a Space Point paired with a Time Point
-31. A "SpaceTime Clock" is a discrete numerical value that corresponds to a SpaceTime's Time Points. It enables SpaceTime Elements to change.
-32. "The Game Clock" is a monotonically increasing discrete numerical value that provides a stable comparison for SpaceTime Clocks
-33. A "Game State" is a snapshot of a Game at a single Game Clock value
-34. A "Transformation" is a change to one or more Game Elements.
+14. A "Rule" is a composition of one or more Ruleset Elements. Its type is based on whatever is useful for discussion and program execution. Example types include Fact and Constraint.
+15. A "Constraint" is a Rule whose component Ruleset Edges include at least one equality or inequality. Constraints' purpose is validating other Elements. e.g. "A rides B" might only be valid when: "A is Creature && B is Creature && A size <= B size".
+16. "A Time Schema" refers to a to a cluster of time-semantic Rules (e.g. speed, distance, forward, back, groupings, orderings, duration).
+17. "A Space Schema" refers to a cluster of space-semantic Rules (e.g. proximity, groupings, distance, direction, orderings, length, width)
+18. "A Spacetime Schema" refers to one pairing of a space schema and a time schema, and any relationships specific to it. (e.g. velocity)
+19. An "Instance" is a concrete version of a Rule. e.g. Node:Creature -> Bob. e.g. Edge: A rides B -> Bob rides Bob's Horse.
+20. "A Game" refers to a Ruleset paired with its Instances.
+21. "A Game Element" references a single Ruleset Element or Instance in a Game.
+22. "A Campaign" refers to all Game Elements
+23. "A SpaceTime" is a SpaceTime Schema Instance, including all points in its time and space.
+24. "A Time Point" refers to an infinitely small slice of a SpaceTime's time paired with all of its space
+25. "A Space Point" refers to an infinitely small area of a SpaceTime's space paired with all of its time
+26. "SpaceTime Time" is the collection of all Time Points in a SpaceTime
+27. "SpaceTime Space" is the collection of all Space Points in a SpaceTime
+28. "A Space Point" refers to an infinitely small slice of SpaceTime Space paired with all of SpaceTime Time
+29. "A SpaceTime Point" is a Space Point paired with a Time Point
+30. A "SpaceTime Clock" is a discrete numerical value that corresponds to a SpaceTime's Time Points. It enables SpaceTime Elements to change.
+31. "The Game Clock" is a monotonically increasing discrete numerical value that provides a stable comparison for SpaceTime Clocks
+32. A "Game State" is a snapshot of a Game at a single Game Clock value
+33. A "Transformation" is a change to one or more Game Elements.
 
 ## Further Definition Context
 1. Rulesets come from rulebooks and similiar sources
