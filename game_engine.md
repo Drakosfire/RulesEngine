@@ -53,8 +53,8 @@
 19. "A Spacetime Schema" refers to one pairing of a space schema and a time schema, and any relationships specific to it. (e.g. velocity)
 20. An "Instance" is a concrete version of an abstract thing. e.g. Node:Creature -> Bob. e.g. Edge: A rides B -> Bob rides Bob's Horse.
 21. "A Game" refers to a Ruleset paired with its Instances.
-22. "A Game Element" references a single Ruleset Element or Instance.
-23. "A Campaign" refers to all Element Instances in a Game
+22. "A Game Element" references a single Ruleset Element or Instance in a Game.
+23. "A Campaign" refers to all Game Elements
 24. "A SpaceTime" is a SpaceTime Schema Instance, including all points in its time and space.
 25. "A Time Point" refers to an infinitely small slice of a SpaceTime's time paired with all of its space
 26. "A Space Point" refers to an infinitely small area of a SpaceTime's space paired with all of its time
