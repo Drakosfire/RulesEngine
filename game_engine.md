@@ -41,33 +41,31 @@
 7. A "Source" is an Edge's origin Node
 8. A "Sink" is an Edge's terminus Node
 9. A "RPG" is a subset of all conceptual games called "Role Playing Games".
-10. A "Rulebook" is an english text that defines how to play a single type of RPG together.
-11. A "Ruleset" is a directed acyclical Graph (DAG) projection of a Rulebook.
+10. A "Rulebook" is an english text that defines how to play a single type of RPG.
+11. A "Ruleset" is a directed acyclical Graph (DAG) projection of a Rulebook and/or other texts, containing references back to the original.
 12. A "Ruleset Node" is a single Rulebook concept (e.g. Creature, Combat, Rest).
-13. An "Ruleset Edge" is a typed Edge between Ruleset Nodes (e.g. Creatures may wear Equipment, Equipment is a superset of Sword, Container can contain Node)
-14. An "Ruleset Element" is a Rule Node or Rule Edge.
+13. A "Ruleset Edge" is a typed Edge between Ruleset Nodes (e.g. Creatures may wear Equipment, Equipment is a superset of Sword, Container can contain Node)
+14. A "Ruleset Element" is a Rule Node or Rule Edge.
 15. A "Rule" is a composition of one or more Ruleset Elements.
 16. A "Constraint" is a Rule that includes Edge Types like subsets and inequalities for the purpose of validating other Elements. e.g. "A rides B" might only be valid when: "A is Creature && B is Creature && A size <= B size".
-17. "A Time Schema" refers to a ruleset-defined cluster of time-semantic elements (e.g. speed, distance, forward, back, groupings, orderings, duration).
-18. "A Space Schema" refers to a ruleset-defined cluster of space-semantic elements (e.g. proximity, groupings, distance, direction, orderings, length, width)
+17. "A Time Schema" refers to a to a cluster of time-semantic Rules (e.g. speed, distance, forward, back, groupings, orderings, duration).
+18. "A Space Schema" refers to a cluster of space-semantic Rules (e.g. proximity, groupings, distance, direction, orderings, length, width)
 19. "A Spacetime Schema" refers to one pairing of a space schema and a time schema, and any relationships specific to it. (e.g. velocity)
-20. "A Game" refers to a unique Ruleset and instantiated versions of the Ruleset Elements, for shared RPG play.
-21. "A Game Ruleset" refers to a unique Ruleset underlying a game's play.
-22. "A Campaign" or "Game Ruleset Instance" refers to the Graph of all instantiated Game Ruleset concepts and relationships in a Game
-23. "A Campaign Node" is a unique Campaign concept. e.g. "Bob", "Bob's Sword", "The Horse Betsy"
-24. "A Campaign Edge" is a unique Campaign relationship. e.g. "The Chest contains Bob's Sword", "Bob rides The Horse Betsy".
-25. "A SpaceTime" is an instance of a SpaceTime Schema in a campaign, including all points in its time and space.
-26. "A SpaceTime Element" references a Campaign Element related only to a single Spacetime.
-27. "Spacetime Time" is the collection of all Time Points in a Spacetime
-28. "Spacetime Space" is the collection of all Space Points in a Spacetime
-29. "A Time Point" refers to an infinitely small slice of Spacetime Time paired with all of Spacetime Space
-30. "A Space Point" refers to an infinitely small slice of Spacetime Space paired with all of Spacetime Time
-31. "A SpaceTime Point" is a Space Point paired with a Time Point
-32. A "Spacetime Clock" is a discrete numerical value that corresponds to a Spacetime's Time Points. It enables Spacetime Elements to change.
-33. "The Game Clock" is a monotonically increasing discrete numerical value that provides a stable comparison for Spacetime Clocks
-
-34. A "Game State" is a snapshot of all Game Elements at a single Game Clock value
-35. A "Transformation" is a change to one or more Game Elements.
+20. An "Instance" is a concrete version of an abstract thing. e.g. Node:Creature -> Bob. e.g. Edge: A rides B -> Bob rides Bob's Horse.
+21. "A Game" refers to a Ruleset paired with its Instances.
+22. "A Game Element" references a single Ruleset Element or Instance.
+23. "A Campaign" refers to all Element Instances in a Game
+24. "A SpaceTime" is a SpaceTime Schema Instance, including all points in its time and space.
+25. "A Time Point" refers to an infinitely small slice of a SpaceTime's time paired with all of its space
+26. "A Space Point" refers to an infinitely small area of a SpaceTime's space paired with all of its time
+27. "SpaceTime Time" is the collection of all Time Points in a SpaceTime
+28. "SpaceTime Space" is the collection of all Space Points in a SpaceTime
+29. "A Space Point" refers to an infinitely small slice of SpaceTime Space paired with all of SpaceTime Time
+30. "A SpaceTime Point" is a Space Point paired with a Time Point
+31. A "SpaceTime Clock" is a discrete numerical value that corresponds to a SpaceTime's Time Points. It enables SpaceTime Elements to change.
+32. "The Game Clock" is a monotonically increasing discrete numerical value that provides a stable comparison for SpaceTime Clocks
+33. A "Game State" is a snapshot of a Game at a single Game Clock value
+34. A "Transformation" is a change to one or more Game Elements.
 
 ## Further Definition Context
 1. Rulesets come from rulebooks and similiar sources
@@ -78,16 +76,16 @@
 6. Discrete concepts and relationships may be ordered (e.g. ordinal, sequential) or unordered (e.g. categorical).
 7. Discrete concepts and relationships may be grouped in mutually exclusive and inclusive ways. (e.g. Space: A state is a distinct entity. "The midwest" is a spatially contiguous group of states. "Square states" is a non-contiguous group.) (e.g. Time: "span" is an ordered contiguous group. "the good years" is an unordered non-contiguous group.).
 8. Rulesets may define other relationships, like representations (map represents country), synonyms (big is like large), subsets (human is a subset of race) and attributes (bob is race human, or bob is large)
-9. A ruleset may have one or more Space Schemas, Time Schemas, and SpaceTime Schemas.
+9. A ruleset may have one or more Space Schemas, Time Schemas, or SpaceTime Schemas.
 10. Instantiated concepts may be named differently from abstract concepts, but require some reference to the abstract concept in order to apply the rules correctly.
 
 ## Spec
 1. We want to play a campaign where:
     1. A game master (GM) controls the Game and facilitates all Transformations
     2. A Game Engine handles all in-progress changes within a Game
-    3. A Game Engine uses constraints to ensure the game state is always valid, either by preventing transformations that would cause invalid relationships, or undoing transformations that caused invalid relationships.
-    4. The GM can easily override the ruleset while playing.
-    5. The GM can easily undo world transformations while playing.
+    3. A Game Engine uses Constraints to ensure the game state is always valid, either by preventing transformations that would cause invalid relationships, or undoing transformations that caused invalid relationships.
+    4. The GM can easily override the Ruleset while playing.
+    5. The GM can easily CRUD Transformations while playing.
     6. The GM can easily trace rule provenance back to its rulebook origin while playing.
     7. The GM interacts with the game via a Command Line CLI
     8. The GM can easily suspend a game by doing nothing.
