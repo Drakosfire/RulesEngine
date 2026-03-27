@@ -46,7 +46,7 @@
 12. A "Ruleset Node" is a single Rulebook concept (e.g. Creature, Combat, Rest).
 13. An "Ruleset Edge" is a typed Edge between Ruleset Nodes (e.g. Creatures may wear Equipment, Equipment is a superset of Sword, Container can contain Node)
 14. An "Ruleset Element" is a Rule Node or Rule Edge.
-15. A "Rule" is a composition of one or more Ruleset Edges.
+15. A "Rule" is a composition of one or more Ruleset Elements.
 16. A "Constraint" is a Rule that includes Edge Types like subsets and inequalities for the purpose of validating other Elements. e.g. "A rides B" might only be valid when: "A is Creature && B is Creature && A size <= B size".
 17. "A Time Schema" refers to a ruleset-defined cluster of time-semantic elements (e.g. speed, distance, forward, back, groupings, orderings, duration).
 18. "A Space Schema" refers to a ruleset-defined cluster of space-semantic elements (e.g. proximity, groupings, distance, direction, orderings, length, width)
