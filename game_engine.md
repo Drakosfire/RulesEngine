@@ -50,7 +50,7 @@
 16. "A Time Schema" refers to a to a cluster of time-semantic Rules (e.g. speed, distance, forward, back, groupings, orderings, duration).
 17. "A Space Schema" refers to a cluster of space-semantic Rules (e.g. proximity, groupings, distance, direction, orderings, length, width)
 18. "A Spacetime Schema" refers to one pairing of a space schema and a time schema, and any relationships specific to it. (e.g. velocity)
-19. An "Instance" is a concrete version of a Rule. e.g. Node:Creature -> Bob. e.g. Edge: A rides B -> Bob rides Bob's Horse.
+19. An "Instance" is a concrete version of a Rule. (e.g. Node: Creature -> Bob.) (e.g. Edge: A rides B -> Bob rides Bob's Horse.)
 20. "A Game" refers to a Ruleset paired with its Instances.
 21. "A Game Element" references a single Ruleset Element or Instance in a Game.
 22. "A Campaign" refers to all Game Elements
