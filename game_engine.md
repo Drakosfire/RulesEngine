@@ -37,21 +37,21 @@
 3. An "Edge" is a relationship between two Nodes
 4. An "Element" is a Node or Edge
 5. A "Node Type" is a label for a category of Nodes.
-6. An "Edge Type" is a label for a category of Edges. Examples include: synonym, hierarchy, containment, superset, condition, attribute, equality, inequality.
+6. An "Edge Type" is a label for a category of Edges
 7. A "Source" is an Edge's origin Node
 8. A "Sink" is an Edge's terminus Node
 9. A "RPG" is a subset of all conceptual games called "Role Playing Games".
 10. A "Rulebook" is a text (book, blog, napkin-back, etc.) that defines or modifies how to play a RPG.
 11. A "Ruleset" is a directed acyclical Graph (DAG) projection of one or more rulebooks, containing references back to the originals.
 12. A "Ruleset Node" is a single Rulebook concept (e.g. Creature, Combat, Rest).
-13. A "Ruleset Edge" is a typed Edge between Ruleset Nodes (e.g. Creatures may wear Equipment, Equipment is a superset of Sword, Container can contain Node)
-14. A "Ruleset Element" is a Rule Node or Rule Edge.
-15. A "Rule" is a composition of one or more Ruleset Elements.
+13. A "Ruleset Edge" is an Edge between Ruleset Nodes whose type is based on a common linguistic relationships. Type examples include: synonym, hierarchy, containment, superset, condition, attribute, equality, inequality. Edge examples include: Creatures may wear Equipment, Equipment is a superset of Sword, Container may contain Noun.
+14. A "Rule" is a composition of one or more Ruleset Elements.
+15. A "Rule Type" is a label for a concept-based category of Rules useful for discussion, like Fact or Constraint (I'm uncertain if rule types are necessary for Types of rules exist based
 16. A "Constraint" is a Rule that includes Edge Types like subsets and inequalities. It exists for the purpose of validating other Elements. e.g. "A rides B" might only be valid when: "A is Creature && B is Creature && A size <= B size".
 17. "A Time Schema" refers to a to a cluster of time-semantic Rules (e.g. speed, distance, forward, back, groupings, orderings, duration).
 18. "A Space Schema" refers to a cluster of space-semantic Rules (e.g. proximity, groupings, distance, direction, orderings, length, width)
 19. "A Spacetime Schema" refers to one pairing of a space schema and a time schema, and any relationships specific to it. (e.g. velocity)
-20. An "Instance" is a concrete version of an abstract thing. e.g. Node:Creature -> Bob. e.g. Edge: A rides B -> Bob rides Bob's Horse.
+20. An "Instance" is a concrete version of a Rule or Element. e.g. Node:Creature -> Bob. e.g. Edge: A rides B -> Bob rides Bob's Horse.
 21. "A Game" refers to a Ruleset paired with its Instances.
 22. "A Game Element" references a single Ruleset Element or Instance in a Game.
 23. "A Campaign" refers to all Game Elements
