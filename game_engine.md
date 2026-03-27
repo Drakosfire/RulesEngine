@@ -53,7 +53,7 @@
 19. An "Instance" is a concrete version of a Rule. (e.g. Node: Creature -> Bob.) (e.g. Edge: A rides B -> Bob rides Bob's Horse.)
 20. "A Game" refers to a Ruleset paired with its Instances.
 21. "A Game Element" references a single Ruleset Element or Instance in a Game.
-22. "A Campaign" refers to all Game Elements
+22. "A Campaign" refers to all Instances in a Game
 23. "A SpaceTime" is a SpaceTime Schema Instance, including all points in its time and space.
 24. "A Time Point" refers to an infinitely small slice of a SpaceTime's time paired with all of its space
 25. "A Space Point" refers to an infinitely small area of a SpaceTime's space paired with all of its time
