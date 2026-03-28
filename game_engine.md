@@ -54,18 +54,19 @@
 20. "A Game" refers to a Ruleset paired with its Instances.
 21. "A Game Element" references a single Ruleset Element or Instance in a Game.
 22. "A Campaign" refers to all Instances in a Game
-23. A "Narrative" weaves together a Campaign's instances to make gameplay enjoyable.
-24. "A SpaceTime" is a SpaceTime Schema Instance, including all points in its time and space.
-25. "A Time Point" refers to an infinitely small slice of a SpaceTime's time paired with all of its space
-26. "A Space Point" refers to an infinitely small area of a SpaceTime's space paired with all of its time
-27. "SpaceTime Time" is the collection of all Time Points in a SpaceTime
-28. "SpaceTime Space" is the collection of all Space Points in a SpaceTime
-29. "A Space Point" refers to an infinitely small slice of SpaceTime Space paired with all of SpaceTime Time
-30. "A SpaceTime Point" is a Space Point paired with a Time Point
-31. A "SpaceTime Clock" is a discrete numerical value that corresponds to a SpaceTime's Time Points. It enables SpaceTime Elements to change.
-32. "The Game Clock" is a monotonically increasing discrete numerical value that provides a stable comparison for SpaceTime Clocks
-33. A "Game State" is a snapshot of a Game at a single Game Clock value
+23. "A SpaceTime" is a SpaceTime Schema Instance, including all points in its time and space.
+24. "A Time Point" refers to an infinitely small slice of a SpaceTime's time paired with all of its space
+25. "A Space Point" refers to an infinitely small area of a SpaceTime's space paired with all of its time
+26. "SpaceTime Time" is the collection of all Time Points in a SpaceTime
+27. "SpaceTime Space" is the collection of all Space Points in a SpaceTime
+28. "A Space Point" refers to an infinitely small slice of SpaceTime Space paired with all of SpaceTime Time
+29. "A SpaceTime Point" is a Space Point paired with a Time Point
+30. A "SpaceTime Clock" is a discrete numerical value that corresponds to a SpaceTime's Time Points. It enables SpaceTime Elements to change.
+31. "The Game Clock" is a monotonically increasing discrete numerical value that provides a stable comparison for SpaceTime Clocks
+32. A "Game State Version" is a monotonically increasing discrete numerical value that increments with all Game State changes - even those like rule overrides that don't increment the Game Clock.
+33. A "Game State" is a snapshot of a Game at a single Game State Version. The current Game State is persisted to the game state file on every state change.
 34. A "Transformation" is a change to one or more Game Elements.
+35. A "Narrative" is a multi-layered story that exists in the GM's head and outside the Game State.
 
 ## Further Definition Context
 1. Rulesets come from rulebooks and similiar sources
