@@ -66,7 +66,7 @@
 32. A "Game Version" is a monotonically increasing discrete numerical value that increments with all Game State changes
 33. A "Game State" is a snapshot of a Game at a single Game Version. The current Game State is persisted to the game state file on every state change.
 34. A "Transformation" is a change to one or more Game Elements.
-35. A "Narrative" is a multi-layered story that occurs over time. It exists in the GM's head and outside the Game State. The Narrative only affects the game in that Transform types that correspond to Narrative progression also increment the Campaign Clock and Game Version. Non-narrative Transforms, like rule overrides, only increment the Game Version.
+35. A "Narrative" is a multi-layered story that occurs over time. It exists in the GM's head and outside the Game State. The Narrative only affects the Game in that Narrative-progressing Transforms increment the Campaign Clock and Game Version, while Non-narrative-progressing Transforms, like rule overrides, only increment the Game Version.
 
 ## Further Definition Context
 1. Rulesets come from rulebooks and similiar sources
