@@ -1,6 +1,6 @@
 # HANDOFF — RLH-11 occupancy evaluator
 
-**Status:** DEFERRED DRAFT  
+**Status:** ACTIVE — implementation candidate, pending review  
 **Repository:** `Drakosfire/RulesEngine`  
 **Authority:** `Drakosfire/DungeonOverMind/Docs/Plans/PLAN-rules-lawyer-graph-experiment.md`  
 **Predecessor:** `RLH_10_RULE_ARTIFACT_CONTRACT_ACCEPTED`  
@@ -40,7 +40,7 @@ Output contains:
 ## Cases
 
 1. ordinary Medium vs occupied Medium → reject;
-2. ally + exact prone allowance → accept;
+2. ally + Prone occupant → reject (the sourced rule has no ally-Prone allowance);
 3. ally without allowance → reject;
 4. hostile/neutral occupied cell → reject;
 5. missing required context → explicit failure, never guessed default;
@@ -71,3 +71,5 @@ RLH_11_OCCUPANCY_EVALUATOR_ACCEPTED
 ```
 
 This proves one formalization path, not an entire ruleset.
+
+The historical ally-Prone case was superseded by the user's sourced-rule correction and RLH-09. The evaluator reads only the three formalized fields; size, relation, and Prone state are explicit contextual inputs for this witness but cannot override the prohibition. The Rust crate accepts only the exact reviewed RLH-09 artifact identity. A temporary Rust toolchain was installed under `/tmp` and the crate's five behavioral/replay tests passed.
