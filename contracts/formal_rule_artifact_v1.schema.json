@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Drakosfire/RulesIngestion/schemas/formal_rule_artifact_v1.json",
+  "title": "Reviewed occupancy formal rule artifact",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "rule_id", "rule_version", "ruleset_id", "ruleset_version", "statement", "inputs", "decision", "exceptions", "evidence", "compiler", "review", "canonical_sha256"],
+  "properties": {
+    "schema_version": {"const": "rules_formal_artifact_v1"},
+    "rule_id": {"const": "dnd5e-2024-srd-occupancy-end-move"},
+    "rule_version": {"const": "1"},
+    "ruleset_id": {"const": "dnd5e-2024-srd-occupancy-v1"},
+    "ruleset_version": {"const": "srd-5.2.1"},
+    "statement": {"type": "string", "minLength": 1},
+    "inputs": {"type": "object"},
+    "decision": {"type": "object", "required": ["when", "then", "otherwise"], "properties": {"when": {"type": "object"}, "then": {"const": "reject"}, "otherwise": {"const": "no_restriction_from_this_rule"}}},
+    "exceptions": {"type": "array", "maxItems": 0},
+    "evidence": {"type": "object", "required": ["evidence_unit_ids", "source_uri", "source_artifact_id", "source_revision_id", "dungeonmind_space_id", "dungeonmind_revision_id", "dungeonmind_assertion_ids", "evidence_ref_ids"]},
+    "compiler": {"type": "object", "required": ["id", "input_candidate_ids", "graph_closure_used"]},
+    "review": {"type": "object", "required": ["schema_version", "disposition", "approved_rule_id", "source"], "properties": {"disposition": {"const": "approved"}}},
+    "canonical_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}
