@@ -1,13 +1,15 @@
 # HANDOFF — RLH-10 rule artifact contract
 
-**Status:** DEFERRED DRAFT  
+**Status:** ACTIVE — implementation candidate, pending review  
 **Repository:** `Drakosfire/RulesEngine`  
 **Authority:** `Drakosfire/DungeonOverMind/Docs/Plans/PLAN-rules-lawyer-graph-experiment.md`  
-**Predecessor:** `RLH_09_REVIEWED_RULE_ARTIFACT_ACCEPTED`  
+**Predecessor:** RLH-09 reviewed artifact implementation candidate; RLH-05 graph audit remains unaccepted  
 **Primary question:** What is the smallest exact artifact contract RulesEngine can accept for the reviewed occupancy rule while preserving deterministic/pure runtime constraints?  
 **Unlocks:** RLH-11
 
 ## Re-anchor
+
+The corrected sourced rule has no ally-Prone movement exception. The imported RLH-09 fixture is pinned to RulesIngestion commit `cc1d56b` and must be rechecked against its eventual reviewed head before merge. This repository remains specification-first; the Python validator is an offline contract harness, not a kernel runtime.
 
 RulesEngine is specification-first today. Re-read the authoritative rule-authoring constraints, evaluation pipeline, world-kernel contract/invariants, and non-goals before adding anything.
 
